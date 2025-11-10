@@ -3,12 +3,19 @@
   /* display: flex;
   justify-content: space-between; */
   text-align: center;
-  align-items: center;
+  align-items: left; /* 1. Vertically center content */
   display: flex;
   justify-content: center; /* 2. Horizontally center content */
   height: 100vh;
   width: 50vh;
   background-color: rgb(229, 147, 147);
   float: left;
+  flex-direction: column;
+  gap: 8px;
   
+}
+.navButton {
+  /* This makes the buttons fill the container's width */
+  width: 50%; 
+  margin-left: 5%;
 }

@@ -10,5 +10,7 @@
   width: 100vh;
   background-color: rgb(177, 223, 182);
   float: center;
+  flex-direction: column;
+
   
 }
