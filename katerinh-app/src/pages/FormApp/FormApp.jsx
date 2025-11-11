@@ -1,6 +1,8 @@
 import style from "./FormApp.module.css";
+import useFormApp from "./useFormApp";
 
 export default function FormApp() {
+  const { mitsos, handleSubmit } = useFormApp();
   return (
     // Κύριος περιέκτης που κρατά τις 2 μεγάλες στήλες
     <form className={style.formContainer}>
