@@ -6,13 +6,13 @@ import NavigationApp from "../../components/NavigationApp/NavigationApp";
 export default function FormPage() { 
     return (
       <>
-            <AppBar text="Contact Form" />
-            <div className="layout">
-              <NavigationApp form={true} />
-              <FormApp />
-              <AsideApp form={true} />
-            </div>
-            <FooterApp />
-          </>
+        <AppBar text="Contact Form" />
+        <div className="layout">
+          <NavigationApp isform={true} />
+          <FormApp />
+          <AsideApp isform={true} />
+        </div>
+        <FooterApp />
+      </>
     );
 }

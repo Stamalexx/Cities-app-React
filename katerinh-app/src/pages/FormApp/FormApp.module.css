@@ -126,26 +126,48 @@
   background-color: #5a6268;
 }
 
-/* 8. Η ΣΤΗΛΗ ΣΦΑΛΜΑΤΩΝ (Δεξιά πλευρά) */
-.errorSection {
-  flex: 1; /* Να πιάνει το 1/3 του χώρου */
+.errorContainer {
+  flex: 1; 
   padding-left: 20px;
-  border-left: 1px solid #eee; /* Μια διακριτική γραμμή ανάμεσα */
+  border-left: 1px solid #eee; 
   display: flex;
   flex-direction: column;
 }
 
-.errorSection b {
+/* --------------------------------- */
+/* ΚΟΚΚΙΝΗ ΚΑΤΑΣΤΑΣΗ (Όταν υπάρχουν σφάλματα) */
+/* --------------------------------- */
+.errorState b {
   color: #dc3545; /* Κόκκινο χρώμα */
   font-size: 18px;
 }
 
-.errorSection textarea {
+.errorState textarea {
   width: 100%;
   height: 150px;
   margin-top: 10px;
   border: 2px solid #dc3545; /* Κόκκινο πλαίσιο */
   background-color: #fef0f0; /* Πολύ ανοιχτό κόκκινο */
+  border-radius: 5px;
+  padding: 8px;
+  font-family: monospace;
+  box-sizing: border-box;
+}
+
+/* --------------------------------- */
+/* ΠΡΑΣΙΝΗ ΚΑΤΑΣΤΑΣΗ (Όταν ΔΕΝ υπάρχουν σφάλματα) */
+/* --------------------------------- */
+.validState b {
+  color: #28a745; /* Πράσινο χρώμα */
+  font-size: 18px;
+}
+
+.validState textarea {
+  width: 100%;
+  height: 150px;
+  margin-top: 10px;
+  border: 2px solid #28a745; /* Πράσινο πλαίσιο */
+  background-color: #f0fef0; /* Πολύ ανοιχτό πράσινο */
   border-radius: 5px;
   padding: 8px;
   font-family: monospace;

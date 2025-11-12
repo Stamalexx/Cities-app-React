@@ -8,6 +8,7 @@ import './index.css'
 
 import App from './App.jsx'
 import FormPage from './pages/FormApp/FormPage.jsx';
+import SuccessApp from './pages/SuccessPage/SuccessApp.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "form",
     element: <FormPage />,
   },
+  {
+    path: "success",
+    element: <SuccessApp />,
+  }
 ]);
 
 

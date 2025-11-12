@@ -1,11 +1,27 @@
+import { useState } from "react";
 import style from "./FormApp.module.css";
 import useFormApp from "./useFormApp";
+import { useNavigate } from "react-router-dom";
 
 export default function FormApp() {
-  const { mitsos, handleSubmit } = useFormApp();
+  const { handleSubmit, validateForm } = useFormApp();
+  const navigate = useNavigate();
+  
+  
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [checkboxValues, setCheckboxValues] = useState([]);
+  const [region, setRegion] = useState("thessaloniki");
+  let errorText = validateForm(email, name, checkboxValues);
+  const formData = { name, email, region, checkboxValues };
+  
+  
   return (
     // Κύριος περιέκτης που κρατά τις 2 μεγάλες στήλες
-    <form className={style.formContainer}>
+    <form
+      className={style.formContainer}
+      onSubmit={(e) => handleSubmit(e, errorText, navigate, formData)}
+    >
       {/* ------------------- */}
       {/* ΣΤΗΛΗ 1: Η ΦΟΡΜΑ  */}
       {/* ------------------- */}
@@ -17,38 +33,81 @@ export default function FormApp() {
         {/* Κάθε 'formRow' είναι μια σειρά (ετικέτα + πεδίο) */}
         <div className={style.formRow}>
           <label htmlFor="name">Ονωματεπώνυμο:</label>
-          <input type="text" id="name" name="name" />
+          <input
+            type="text"
+            id="name"
+            name="name"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
         </div>
 
         <div className={style.formRow}>
           <label htmlFor="region">Περιοχή:</label>
-          <select name="region" id="region" size="5">
-            {/* Σημείωση: Το "multiple" το έβγαλα για να μοιάζει με απλό select. 
-              Αν το θες, απλά πρόσθεσέ το πάλι. Το size="5" ταιριάζει με την εικόνα σου.
-            */}
+          <select
+            value={region}
+            onChange={(e) => setRegion(e.target.value)}
+            name="region"
+            id="region"
+            size="5"
+          >
             <option value="thessaloniki">Μακεδονία</option>
             <option value="veroia">Πελοπόννησος</option>
-            <option value="edessa">Θράκη</option>
+            <option value="thraki">Θράκη</option>
           </select>
         </div>
 
-        {/* Χρησιμοποιούμε <fieldset> για να ομαδοποιήσουμε τα checkboxes.
-          Το <legend> είναι η ετικέτα για την ομάδα.
-        */}
         <fieldset className={style.checkboxGroup}>
-          <legend >Τομέας Ενδιαφέροντος (διαλέξτε όσους θέλετε):</legend>
+          <legend>Τομέας Ενδιαφέροντος (διαλέξτε όσους θέλετε):</legend>
 
           <div className={style.checkboxOptions}>
             <label>
-              <input type="checkbox" name="interest" value="sites" />
+              <input
+                type="checkbox"
+                name="interest"
+                value="sites"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setCheckboxValues((prev) =>
+                    e.target.checked
+                      ? [...prev, value]
+                      : prev.filter((v) => v !== value)
+                  );
+                }}
+              />
               Αρχαιολογικοί χώροι
             </label>
             <label>
-              <input type="checkbox" name="interest" value="beaches" />
+              <input
+                type="checkbox"
+                name="interest"
+                value="beaches"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setCheckboxValues((prev) =>
+                    e.target.checked
+                      ? [...prev, value]
+                      : prev.filter((v) => v !== value)
+                  );
+                }}
+              />
               Ακτές κολύμβησης
             </label>
             <label>
-              <input type="checkbox" name="interest" value="food" />
+              <input
+                type="checkbox"
+                name="interest"
+                value="food"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setCheckboxValues((prev) =>
+                    e.target.checked
+                      ? [...prev, value]
+                      : prev.filter((v) => v !== value)
+                  );
+                }}
+              />
               Φαγητό
             </label>
           </div>
@@ -56,7 +115,15 @@ export default function FormApp() {
 
         <div className={style.formRow}>
           <label htmlFor="email">E-mail διεύθυνση:</label>
-          <input type="email" id="email" name="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
         </div>
 
         {/* Κοντέινερ για τα κουμπιά, ώστε να μπουν στη 2η στήλη */}
@@ -64,21 +131,34 @@ export default function FormApp() {
           <button type="submit" className={style.submitButton}>
             Υποβολή
           </button>
-          <button type="reset" className={style.resetButton}>
+
+          <button
+            type="reset"
+            className={style.resetButton}
+            onClick={() => {
+              setName("");
+              setEmail("");
+              setCheckboxValues([]);
+              setRegion("thessaloniki");
+            }}
+          >
             Καθάρισμα
           </button>
         </div>
       </div>
 
-      {/* --------------------- */}
-      {/* ΣΤΗΛΗ 2: ΤΑ ΣΦΑΛΜΑΤΑ */}
-      {/* --------------------- */}
-      <div className={style.errorSection}>
+      {/* Errors */}
+      <div
+        className={`${style.errorContainer} ${
+          errorText ? style.errorState : style.validState
+        }`}
+      >
         <b>Σφάλματα:</b>
         <textarea
           readOnly
           rows="6"
-          placeholder="...εδώ θα εμφανιστούν τα σφάλματα..."
+          placeholder="No errors !"
+          value={errorText}
         ></textarea>
       </div>
     </form>

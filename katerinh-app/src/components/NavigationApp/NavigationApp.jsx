@@ -1,10 +1,9 @@
 import style from "./NavigationApp.module.css"
 import { Link } from "react-router-dom";
-export default function NavigationApp({ onCitySelect, form } ) {
+export default function NavigationApp({ onCitySelect, isform }) {
   let content;
 
-  if (!form) 
-    {
+  if (!isform) {
     content = (
       <nav className={style.container}>
         <button
@@ -27,16 +26,13 @@ export default function NavigationApp({ onCitySelect, form } ) {
         </button>
       </nav>
     );
-    }
+  } else if (isform) {
+    content = (
+      <nav className={style.container}>
+        <p>Thank you for visiting the form page.</p>
+      </nav>
+    );
+  }
 
-    else if (form) {
-      content = (
-        <nav className={style.container}>
-          <p>Thank you for visiting the form page.</p>
-        </nav>
-      );
-
-    }
-
-  return ( content);
+  return content;
 }
